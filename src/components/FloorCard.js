@@ -1,6 +1,19 @@
 import React, { Component } from 'react';
 import { Card } from 'antd';
 
+
+const style = {
+    width: '100px',
+    margin: '10px',
+    boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2)',
+    border: '1px solid grey',
+    background: 'grey',
+    color: 'white',
+    fontSize: '16px',
+    textAlign: 'center'
+};
+
+
 class FloorCard extends Component {
     constructor(props) {
         super(props);
@@ -8,17 +21,6 @@ class FloorCard extends Component {
     }
 
     render() {
-        const style = {
-            width: '100px',
-            margin: '10px',
-            boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2)',
-            border: '1px solid grey',
-            background: 'grey',
-            color: 'white',
-            fontSize: '16px',
-            textAlign: 'center'
-        };
-
         return (
             <Card style={style}>
                 {this.props.floor}

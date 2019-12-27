@@ -1,0 +1,9 @@
+.floorRowCardAvailable {
+    background-color: lightgreen;
+}
+.floorRowCardOccupied {
+    background-color: lightpink;
+}
+.floorRowCardUnknown {
+    background-color: lightgrey;
+}
