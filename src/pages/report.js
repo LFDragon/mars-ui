@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Tabs } from 'antd';
 import { connect } from 'dva';
-import FloorRow from '../components/FloorRow';
+import StaticCard from '../components/StaticCard';
 
 const { TabPane } = Tabs;
 const namespace = 'meetingroom';
@@ -23,7 +23,7 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
-@connect(mapStateToProps, mapDispatchToProps)
+// @connect(mapStateToProps, mapDispatchToProps)
 export default class MainPage extends Component {
     constructor(props) {
         super(props);
@@ -31,7 +31,7 @@ export default class MainPage extends Component {
     }
 
     componentDidMount() {
-        this.props.onDidMount();
+        // this.props.onDidMount();
     }
 
     callback(key) {
@@ -42,9 +42,7 @@ export default class MainPage extends Component {
         return (
             <Tabs defaultActiveKey="1" onChange={this.callback} style={{ paddingTop: '20px'}}>
                 <TabPane tab="TKH OT 2" key="1">
-                    {this.props.roomData.data.map((value, index) => {
-                        return <FloorRow data={value}></FloorRow>
-                    })}
+                    <StaticCard />
                 </TabPane>
                 <TabPane tab="TKH OT 1" key="2">
                     Content of Tab Pane 2
