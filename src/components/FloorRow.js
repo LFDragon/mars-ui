@@ -37,13 +37,22 @@ class FloorRow extends Component {
                 <div style={wrapperDetail}>
                     <List
                         grid={{ column: 6 }}
-                        dataSource={this.props.data.detail}
+                        dataSource={this.props.data.rooms}
                         renderItem={ (item, index) => (
-                        <List.Item style={ {marginBottom: 0} }>
-                            <Popover placement="bottom" content={item.status} trigger="hover">
-                                <Card style={cardDetail} className={myStyle[statusMap[item.status]]}> {item.room} </Card>
-                            </Popover>
-                        </List.Item>
+                            <List.Item style={ {marginBottom: 0} }>
+                                <Popover 
+                                    placement="bottom" 
+                                    content={(
+                                        <div>
+                                            <p style={{ margin: '0'}}>Status: {item.status}</p>
+                                            <p style={{ margin: '0'}}>Detail: {item.remark}</p>
+                                            <p style={{ margin: '0'}}>TimeStamp: {item.updateTimestamp}</p>
+                                        </div>
+                                    )} 
+                                    trigger="hover">
+                                    <Card style={cardDetail} className={myStyle[statusMap[item.status]]}> {item.name} </Card>
+                                </Popover>
+                            </List.Item>
                         )}
                     />
                 </div>
