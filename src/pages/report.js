@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Tabs } from 'antd';
 import { connect } from 'dva';
 import StaticCard from '../components/StaticCard';
+import RoomReport from '../components/RoomReport';
 
 const { TabPane } = Tabs;
 const namespace = 'meetingroom';
@@ -43,6 +44,7 @@ export default class MainPage extends Component {
             <Tabs defaultActiveKey="1" onChange={this.callback} style={{ paddingTop: '20px'}}>
                 <TabPane tab="TKH OT 2" key="1">
                     <StaticCard />
+                    <RoomReport />
                 </TabPane>
                 <TabPane tab="TKH OT 1" key="2">
                     Content of Tab Pane 2
