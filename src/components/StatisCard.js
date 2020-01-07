@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Statistic, Card, Row, Col, Icon } from 'antd';
 
-class StaticCard extends Component {
+class StatisCard extends Component {
     constructor(props) {
         super(props);
         this.state = {}
@@ -9,13 +9,13 @@ class StaticCard extends Component {
 
     render() {
         return (
-            <div style={{ padding: '30px' }}>
+            <div style={{ padding: '10px 30px 30px 30px' }}>
                 <Row gutter={16}>
                     <Col span={8}>
                         <Card>
                         <Statistic
                             title="Book Rate"
-                            value={11.28}
+                            value={this.props.data.bookRate}
                             precision={2}
                             valueStyle={{ color: '#3f8600' }}
                             suffix="%"
@@ -26,7 +26,7 @@ class StaticCard extends Component {
                         <Card>
                         <Statistic
                             title="Usage Rate"
-                            value={9.3}
+                            value={this.props.data.useRage}
                             precision={2}
                             valueStyle={{ color: '#3f8600' }}
                             suffix="%"
@@ -37,7 +37,7 @@ class StaticCard extends Component {
                         <Card>
                         <Statistic
                             title="Utilization"
-                            value={12.0}
+                            value={this.props.data.util}
                             precision={2}
                             valueStyle={{ color: '#3f8600' }}
                             suffix="%"
@@ -50,4 +50,4 @@ class StaticCard extends Component {
     }
 }
 
-export default StaticCard;
+export default StatisCard;

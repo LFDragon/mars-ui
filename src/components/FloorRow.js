@@ -3,13 +3,11 @@ import { List, Card, Popover } from 'antd';
 import FloorCard from './FloorCard';
 import myStyle from '../css/FloorRow.css';
 
-
 const wrapper = {
     marginBottom: '15px',
     display: 'flex'
 };
 const wrapperDetail = {
-    // border: '1px solid lightgrey',
     width: '100%'
 };
 const cardDetail = {
@@ -23,7 +21,6 @@ const statusMap = {
     UNKNOWN: 'floorRowCardUnknown'
 }
 
-
 class FloorRow extends Component {
     constructor(props) {
         super(props);
@@ -33,7 +30,7 @@ class FloorRow extends Component {
     render() {
         return (
             <div style={wrapper}>
-                <FloorCard floor={this.props.data.floor}></FloorCard>
+                <FloorCard content={this.props.data.floor}></FloorCard>
                 <div style={wrapperDetail}>
                     <List
                         grid={{ column: 6 }}

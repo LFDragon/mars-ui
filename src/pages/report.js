@@ -1,11 +1,17 @@
 import React, { Component } from 'react';
 import { Tabs } from 'antd';
 import { connect } from 'dva';
-import StaticCard from '../components/StaticCard';
+import StatisCard from '../components/StatisCard';
 import RoomReport from '../components/RoomReport';
 
 const { TabPane } = Tabs;
 const namespace = 'meetingroom';
+
+const mockStatisData = {
+    'bookRate': 12.3,
+    'useRage': 9.2,
+    'util': 10
+};
 
 const mapStateToProps = (state) => {
     const roomData = state[namespace];
@@ -43,7 +49,7 @@ export default class MainPage extends Component {
         return (
             <Tabs defaultActiveKey="1" onChange={this.callback} style={{ paddingTop: '20px'}}>
                 <TabPane tab="TKH OT 2" key="1">
-                    <StaticCard />
+                    <StatisCard data={mockStatisData} />
                     <RoomReport />
                 </TabPane>
                 <TabPane tab="TKH OT 1" key="2">

@@ -1,24 +1,34 @@
 import React, { Component } from 'react';
 import { Select, Row, Col } from 'antd';
+import FloorCard from './FloorCard';
+import StatisCard from '../components/StatisCard';
 
 const { Option } = Select;
+
+const wrapper = {
+    marginTop: '20px',
+    display: 'flex'
+};
+const wrapperDetail = {
+    width: '100%'
+};
 
 class RoomReport extends Component {
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {
+            room: 'CR24.4',
+            statis: {
+                'bookRate': 3.5,
+                'useRage': 8,
+                'util': 15.78
+            },
+        };
+        this.onChange = this.onChange.bind(this); 
     }
 
     onChange(value) {
-        console.log(`selected ${value}`);
-    }
-
-    onBlur() {
-        console.log('blur');
-    }
-
-    onFocus() {
-        console.log('focus');
+        this.setState({'room': value});
     }
 
     onSearch(val) {
@@ -31,7 +41,7 @@ class RoomReport extends Component {
 
     render() {
         return (
-            <div style={{ padding: '30px' }}>
+            <div style={{ padding: '30px', borderTop: '1px solid lightgrey' }}>
                 <Row gutter={16}>
                     <Select
                         showSearch
@@ -39,8 +49,6 @@ class RoomReport extends Component {
                         placeholder="Select Room"
                         optionFilterProp="children"
                         onChange={this.onChange}
-                        onFocus={this.onFocus}
-                        onBlur={this.onBlur}
                         onSearch={this.onSearch}
                         filterOption={(input, option) =>
                             option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
@@ -57,6 +65,12 @@ class RoomReport extends Component {
                         <Option value="custom">Custom Range</Option>
                     </Select>
                 </Row>
+                <div style={wrapper}>
+                    <FloorCard content={this.state.room}></FloorCard>
+                    <div style={wrapperDetail}>
+                        <StatisCard data={this.state.statis} />
+                    </div>
+                </div>
             </div>
         );
     }
