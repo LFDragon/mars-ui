@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Select, Row, Col } from 'antd';
 import FloorCard from './FloorCard';
-import StatisCard from '../components/StatisCard';
+import StatisCard from './StatisCard';
 
 const { Option } = Select;
 
