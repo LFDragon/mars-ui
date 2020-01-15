@@ -19,4 +19,11 @@ export default {
             },
         ]
     }],
+    proxy: {
+        '/proxy': {
+            target: 'http://139.224.70.36:8443',
+            changeOrigin: true,
+            pathRewrite: { "^/proxy": "" }
+        },
+    }
 };

@@ -41,13 +41,13 @@ class FloorRow extends Component {
                                     placement="bottom" 
                                     content={(
                                         <div>
-                                            <p style={{ margin: '0'}}>Status: {item.status}</p>
-                                            <p style={{ margin: '0'}}>Detail: {item.remark}</p>
-                                            <p style={{ margin: '0'}}>TimeStamp: {item.updateTimestamp}</p>
+                                            <p style={{ margin: '0'}}>Status: {item.currentStatus.status}</p>
+                                            <p style={{ margin: '0'}}>Detail: {item.room.remark}</p>
+                                            <p style={{ margin: '0'}}>Time: {Date(item.currentStatus.updateTimestamp)}</p>
                                         </div>
                                     )} 
                                     trigger="hover">
-                                    <Card style={cardDetail} className={myStyle[statusMap[item.status]]}> {item.name} </Card>
+                                    <Card style={cardDetail} className={myStyle[statusMap[item.currentStatus.status]]}> {item.room.name} </Card>
                                 </Popover>
                             </List.Item>
                         )}
