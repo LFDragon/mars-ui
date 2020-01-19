@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Select, Row, Col } from 'antd';
 import FloorCard from './FloorCard';
 import StatisCard from './StatisCard';
+import TimeLine from './TimeLine';
 
 const { Option } = Select;
 
@@ -69,6 +70,7 @@ class RoomReport extends Component {
                     <FloorCard content={this.state.room}></FloorCard>
                     <div style={wrapperDetail}>
                         <StatisCard data={this.state.statis} />
+                        <TimeLine />
                     </div>
                 </div>
             </div>
