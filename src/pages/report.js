@@ -5,32 +5,13 @@ import StatisCard from '../components/StatisCard';
 import RoomReport from '../components/RoomReport';
 
 const { TabPane } = Tabs;
-const namespace = 'meetingroom';
 
 const mockStatisData = {
-    'bookRate': 12.3,
-    'useRage': 9.2,
-    'util': 10
+    'bookRate': 0,
+    'useRage': 0,
+    'util': 0
 };
 
-const mapStateToProps = (state) => {
-    const roomData = state[namespace];
-    return {
-        roomData,
-    };
-};
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        onDidMount: () => {
-            dispatch({
-                type: `${namespace}/queryRoomStatus`,
-            });
-        },
-    };
-};
-
-// @connect(mapStateToProps, mapDispatchToProps)
 export default class MainPage extends Component {
     constructor(props) {
         super(props);

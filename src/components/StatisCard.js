@@ -11,7 +11,7 @@ class StatisCard extends Component {
         return (
             <div style={{ padding: '10px 30px 30px 30px' }}>
                 <Row gutter={16}>
-                    <Col span={8}>
+                    {/* <Col span={8}>
                         <Card>
                         <Statistic
                             title="Book Rate"
@@ -32,7 +32,7 @@ class StatisCard extends Component {
                             suffix="%"
                         />
                         </Card>
-                    </Col>
+                    </Col> */}
                     <Col span={8}>
                         <Card>
                         <Statistic

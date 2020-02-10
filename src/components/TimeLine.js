@@ -24,7 +24,12 @@ class TimeLine extends Component {
     }
 
     render() {
-        var dateWidth = 100/10;
+        var dateWidth = null;
+        var timeItem = null;
+        if (this.props.range == "day") {
+            timeItem = ['00:00', '02:00', '04:00', '06:00', '08:00', '10:00', '12:00', '14:00', '16:00', '18:00', '20:00', '22:00'];
+            dateWidth = 100 / timeItem.length;
+        }
         return (
             <div style={{ margin: '0 0 0 30px' }}>
                 <p>Time line:</p>
@@ -95,16 +100,11 @@ class TimeLine extends Component {
                             />
                     </div>
                     <div style={wrapperDate}>
-                        <SecDate width={dateWidth}>09:00</SecDate>
-                        <SecDate width={dateWidth}>10:00</SecDate>
-                        <SecDate width={dateWidth}>11:00</SecDate>
-                        <SecDate width={dateWidth}>12:00</SecDate>
-                        <SecDate width={dateWidth}>13:00</SecDate>
-                        <SecDate width={dateWidth}>14:00</SecDate>
-                        <SecDate width={dateWidth}>15:00</SecDate>
-                        <SecDate width={dateWidth}>16:00</SecDate>
-                        <SecDate width={dateWidth}>17:00</SecDate>
-                        <SecDate width={dateWidth}>18:00</SecDate>
+                        {
+                            timeItem.map(function (item) {
+                                return <SecDate width={dateWidth}>{item}</SecDate>
+                            })
+                        }
                     </div>
                 </div>
             </div>
