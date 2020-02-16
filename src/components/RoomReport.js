@@ -121,7 +121,7 @@ class RoomReport extends Component {
                             <TimeLine range="day" data={data.roomStatusList} />
                         </div>
                         :
-                        <div style={{ margin: '10px 0 0 20px'}}><Alert message="No data for this room." type="info" /></div>
+                        <div style={{ margin: '10px 0 0 20px' }}><Alert message="No data for this room." type="info" /></div>
                     }
                 </div>
             </div>

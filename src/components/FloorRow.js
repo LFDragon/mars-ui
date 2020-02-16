@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 import { List, Card, Popover } from 'antd';
 import FloorCard from './FloorCard';
 import myStyle from '../css/FloorRow.css';
@@ -43,7 +44,7 @@ class FloorRow extends Component {
                                         <div>
                                             <p style={{ margin: '0'}}>Status: {item.currentStatus.status}</p>
                                             <p style={{ margin: '0'}}>Detail: {item.room.remark}</p>
-                                            <p style={{ margin: '0'}}>Time: {Date(item.currentStatus.updateTimestamp)}</p>
+                                            <p style={{ margin: '0'}}>Update time: {moment.utc(item.currentStatus.updateTimestamp).format("YYYY-MM-DD HH:mm:ss")}</p>
                                         </div>
                                     )} 
                                     trigger="hover">

@@ -32,13 +32,13 @@ export default class MainPage extends Component {
 
     componentDidMount() {
         this.props.onDidMount();
-        this.interval = setInterval(() => {
-           this.props.onDidMount();
-        }, 10000);
+        // this.interval = setInterval(() => {
+        //    this.props.onDidMount();
+        // }, 10000);
     }
 
     componentWillUnmount() {
-        clearInterval(this.interval);
+        // clearInterval(this.interval);
     }
 
     callback(key) {
