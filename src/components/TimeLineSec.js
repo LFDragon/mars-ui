@@ -7,13 +7,13 @@ const style = {
 }
 const colorMap = {
     AVAILABLE: {
-        backgroundColor: 'white'
+        backgroundColor: 'lightgreen'
     },
     OCCUPIED: {
         backgroundColor: 'lightpink'
     },
     UNKNOWN: {
-        backgroundColor: 'lightgrey'
+        backgroundColor: 'white'
     }
 }
 

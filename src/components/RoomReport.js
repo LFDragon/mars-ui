@@ -43,14 +43,13 @@ class RoomReport extends Component {
         this.state = {};
         this.queryRoom = "CR24.4";
         this.queryRange = "byDay";
-        this.queryDate = moment(new Date().toLocaleDateString(), 'YYYY-MM-DD');
+        this.queryDate = moment(new Date().toLocaleDateString(), 'YYYY-MM-DD').subtract(1,'days');
         this.onRoomChange = this.onRoomChange.bind(this);
         this.onRangeChange = this.onRangeChange.bind(this);
         this.onDateChange = this.onDateChange.bind(this);
     }
 
     onRoomChange(value) {
-        this.setState({'room': value});
         this.queryRoom = value;
         this.triggerSearch();
     }
@@ -68,7 +67,6 @@ class RoomReport extends Component {
     triggerSearch() {
         var queryString = "?";
         queryString += `fromDate=${this.queryDate.format('YYYY-MM-DD')}`;
-        console.log(queryString);
         this.props.queryReport(queryString);
     }
 
@@ -118,7 +116,7 @@ class RoomReport extends Component {
                         ? 
                         <div style={wrapperDetail}>
                             <StatisCard data={data.utilizeRate} />
-                            <TimeLine range="day" data={data.roomStatusList} />
+                            <TimeLine range="day" data={data.roomStatusList} dateFrom={this.queryDate.format('YYYY-MM-DD')} />
                         </div>
                         :
                         <div style={{ margin: '10px 0 0 20px' }}><Alert message="No data for this room." type="info" /></div>

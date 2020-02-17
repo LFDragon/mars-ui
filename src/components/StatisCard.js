@@ -37,7 +37,7 @@ class StatisCard extends Component {
                         <Card>
                         <Statistic
                             title="Utilization"
-                            value={this.props.data.util}
+                            value={this.props.data}
                             precision={2}
                             valueStyle={{ color: '#3f8600' }}
                             suffix="%"
