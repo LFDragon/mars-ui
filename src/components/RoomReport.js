@@ -115,7 +115,7 @@ class RoomReport extends Component {
                     {data 
                         ? 
                         <div style={wrapperDetail}>
-                            <StatisCard data={data.utilizeRate} />
+                            <StatisCard data={data.utilizeRate * 100} />
                             <TimeLine range="day" data={data.roomStatusList} dateFrom={this.queryDate.format('YYYY-MM-DD')} />
                         </div>
                         :

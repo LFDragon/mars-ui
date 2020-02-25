@@ -37,7 +37,6 @@ class TimeLine extends Component {
 
             //Set data
             var nextSecType = 'UNKNOWN';
-            console.log(this.props.dateFrom + "T00:00:00");
             var nextSecStartTime = moment(this.props.dateFrom + "T00:00:00");
             for (let i in this.props.data) {
                 var newSec = {};
