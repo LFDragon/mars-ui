@@ -4,6 +4,13 @@ import styles from './BasicLayout.less';
 
 const { Header, Footer, Sider, Content } = Layout;
 
+const img = {
+    marginTop: '10px',
+    width: '160px',
+    marginLeft: 'auto',
+    marginRight: 'auto'
+};
+
 class BasicLayout extends Component {
     render() {
         return (
@@ -15,7 +22,7 @@ class BasicLayout extends Component {
                                 <span className={styles['override-ant-carousel']}>
                                     <Carousel>
                                         <div>
-                                            <h3>HSBC MARS Logo</h3>
+                                            <img style={img} src={require('../assets/img/mars_logo.png')} alt={'Mars Logo'}></img>
                                         </div>
                                     </Carousel>
                                 </span>
