@@ -18,5 +18,6 @@ function checkStatus(response) {
 export default async function request(url, options) {
     const response = await fetch(url, options);
     checkStatus(response);
-    return await response.json();
+    if (response.status != 204) return response.json();
+    else return [];
 }

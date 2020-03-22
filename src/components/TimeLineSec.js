@@ -31,7 +31,7 @@ class TimeLineSec extends Component {
                     <div>
                         <p style={{ margin: '0'}}>Start: {this.props.data.start}</p>
                         <p style={{ margin: '0'}}>End: {this.props.data.end}</p>
-                        <p style={{ margin: '0'}}>Detail: {this.props.data.detail}</p>
+                        <p style={{ margin: '0'}}>Status: {this.props.data.status}</p>
                     </div>
                 )} 
                 trigger="hover">

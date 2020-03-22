@@ -9,7 +9,7 @@ export default {
         *queryRoomReport(_, sagaEffects) {
             const { call, put } = sagaEffects;
             const { payload } = _;
-            const endPointURI = '/proxy/rooms/status/report' + payload;
+            const endPointURI = '/rooms/status/report' + payload;
         
             const reportData = yield call(request, endPointURI);
             yield put({ type: 'refreshStatus', payload: reportData });

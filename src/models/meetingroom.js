@@ -8,7 +8,7 @@ export default {
     effects: {
         *queryRoomStatus(_, sagaEffects) {
             const { call, put } = sagaEffects;
-            const endPointURI = '/proxy/floors';
+            const endPointURI = '/floors';
         
             const roomData = yield call(request, endPointURI);
             yield put({ type: 'refreshStatus', payload: roomData });

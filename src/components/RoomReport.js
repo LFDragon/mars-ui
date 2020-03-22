@@ -100,7 +100,7 @@ class RoomReport extends Component {
                     >
                         <Option value="CR24.4">CR24.4</Option>
                         <Option value="VCR24.5">VCR24.5</Option>
-                        <Option value="CR25.4">CR25.4</Option>
+                        <Option value="CR25.3">CR25.3</Option>
                         <Option value="VCR25.5">VCR25.5</Option>
                     </Select>
                     <Select defaultValue={this.queryRange} style={{ width: 200, marginRight: '20px' }} onChange={this.onRangeChange}>
