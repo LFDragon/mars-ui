@@ -54,10 +54,10 @@ export default class MainPage extends Component {
                     })}
                 </TabPane>
                 <TabPane tab="TKH OT 1" key="2">
-                    Content of Tab Pane 2
+                    No data.
                 </TabPane>
                 <TabPane tab="..." key="3">
-                    Content of Tab Pane 3
+                    No data.
                 </TabPane>
             </Tabs>      
         );

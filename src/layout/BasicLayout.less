@@ -1,18 +1,42 @@
-.override-ant-carousel {
-  :global(.ant-carousel .slick-slide) {
-    text-align: center;
-    height: 180px;
-    line-height: 180px;
-    background: #fafeff;
-    overflow: hidden;
-  }
-}
-
 .my-banner {
   text-align: center;
-  height: 180px;
-  line-height: 180px;
   background: #fafeff;
-  overflow: hidden;
   display: flex;
+}
+
+.my-banner-img-wrapper {
+  margin-left: auto;
+  margin-top: 8px;
+  margin-bottom: 10px;
+}
+
+.my-banner-img {
+  width: 160px;
+  height: 160px;
+}
+
+.my-banner-text {
+  margin-right: auto;
+  margin-left: 80px;
+  font-size: 26px;
+  padding-top: 70px;
+}
+
+@media (max-width: 480px) {
+  .my-banner-img-wrapper {
+    margin-left: 40px;
+    margin-right: 10px;
+  }
+
+  .my-banner-img {
+    width: 80px;
+    height: 80px;
+  }
+
+  .my-banner-text {
+    padding-top: 30px;
+    font-size: 14px;
+    margin-left: 0px;
+    margin-right: 40px;
+  }
 }

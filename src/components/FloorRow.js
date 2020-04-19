@@ -34,7 +34,15 @@ class FloorRow extends Component {
                 <FloorCard content={this.props.data.floor}></FloorCard>
                 <div style={wrapperDetail}>
                     <List
-                        grid={{ column: 6 }}
+                        grid={{
+                            gutter: 16,
+                            xs: 1,
+                            sm: 2,
+                            md: 4,
+                            lg: 4,
+                            xl: 6,
+                            xxl: 6,
+                          }}
                         dataSource={this.props.data.rooms}
                         renderItem={ (item, index) => (
                             <List.Item style={ {marginBottom: 0} }>
@@ -48,7 +56,10 @@ class FloorRow extends Component {
                                         </div>
                                     )} 
                                     trigger="hover">
-                                    <Card style={cardDetail} className={myStyle[statusMap[item.currentStatus.status]]}> {item.room.name} </Card>
+                                    <Card bodyStyle={{paddingTop:'10px', paddingBottom:'10px'}} style={cardDetail} className={myStyle[statusMap[item.currentStatus.status]]}>
+                                        <div style={{color:'grey'}}>{item.room.name}</div>
+                                        <div>{item.currentStatus.status}</div>
+                                    </Card>
                                 </Popover>
                             </List.Item>
                         )}
