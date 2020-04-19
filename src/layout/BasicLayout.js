@@ -27,10 +27,10 @@ class BasicLayout extends Component {
                 <Content>
                     <Row>
                         <Col span={24}>
-                        <Menu onClick={this.handleClick} theme="light" mode="horizontal" defaultSelectedKeys={[window.location.pathname]}>
-                            <Menu.Item key="/">Status</Menu.Item>
-                            <Menu.Item key="/report">Report</Menu.Item>
-                        </Menu>
+                            <Menu onClick={this.handleClick} theme="light" mode="horizontal" defaultSelectedKeys={[window.location.pathname]}>
+                                <Menu.Item key="/">Status</Menu.Item>
+                                <Menu.Item key="/report">Report</Menu.Item>
+                            </Menu>
                         </Col>
                     </Row>
                     <Row>
