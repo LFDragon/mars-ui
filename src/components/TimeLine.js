@@ -8,14 +8,15 @@ const wrapperTimeLine = {
     border: '1px solid lightgrey',
     backgroundColor: 'white',
     height: '50px',
-    width: '100%'
+    minWidth: '480px'
 };
 const wrapperDate = {
     display: 'flex',
-    height: '20px'
-}
+    height: '20px',
+    minWidth: '480px'
+};
 const wrapper = {
-    margin: '0 30px 0 0',
+    overflowX: 'scroll'
 };
 
 const SCALEBYDAY = ['00:00', '02:00', '04:00', '06:00', '08:00', '10:00', '12:00', '14:00', '16:00', '18:00', '20:00', '22:00'];
@@ -64,7 +65,7 @@ class TimeLine extends Component {
         }
 
         return (
-            <div style={{ margin: '0 0 0 30px' }}>
+            <div>
                 <p>Time line:</p>
                 <div style={wrapper}>
                     <div style={wrapperTimeLine}>

@@ -13,7 +13,7 @@ const colorMap = {
         backgroundColor: 'lightpink'
     },
     UNKNOWN: {
-        backgroundColor: 'white'
+        backgroundColor: 'lightgrey'
     }
 }
 

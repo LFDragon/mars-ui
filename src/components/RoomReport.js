@@ -5,6 +5,7 @@ import { connect } from 'dva';
 import FloorCard from './FloorCard';
 import StatisCard from './StatisCard';
 import TimeLine from './TimeLine';
+import myStyle from '../css/RoomReport.less';
 
 const { Option } = Select;
 const { MonthPicker, RangePicker, WeekPicker } = DatePicker;
@@ -66,6 +67,7 @@ class RoomReport extends Component {
 
     triggerSearch() {
         var queryString = "?";
+        if (!this.queryDate) return;
         queryString += `fromDate=${this.queryDate.format('YYYY-MM-DD')}`;
         this.props.queryReport(queryString);
     }
@@ -85,11 +87,11 @@ class RoomReport extends Component {
             }
         }
         return (
-            <div style={{ padding: '30px', borderTop: '1px solid lightgrey' }}>
+            <div style={{ padding: '30px 10px 0px 10px', borderTop: '1px solid lightgrey' }}>
                 <Row gutter={16}>
                     <Select
                         showSearch
-                        style={{ width: 200, marginRight: '20px' }}
+                        className={myStyle['mySelect']}
                         defaultValue={this.queryRoom}
                         optionFilterProp="children"
                         onChange={this.onRoomChange}
@@ -103,23 +105,23 @@ class RoomReport extends Component {
                         <Option value="CR25.3">CR25.3</Option>
                         <Option value="VCR25.5">VCR25.5</Option>
                     </Select>
-                    <Select defaultValue={this.queryRange} style={{ width: 200, marginRight: '20px' }} onChange={this.onRangeChange}>
+                    <Select defaultValue={this.queryRange} className={myStyle['mySelect']} onChange={this.onRangeChange}>
                         <Option value="byDay">By Day</Option>
                         <Option value="byMonth">By Month</Option>
                         <Option value="custom">Custom Range</Option>
                     </Select>
-                    <DatePicker style={{ width: 200 }} onChange={this.onDateChange} defaultValue={this.queryDate}/>
+                    <DatePicker className={myStyle['mySelect']} onChange={this.onDateChange} defaultValue={this.queryDate}/>
                 </Row>
                 <div style={wrapper}>
-                    <FloorCard content={this.queryRoom}></FloorCard>
+                    {/* <FloorCard content={this.queryRoom}></FloorCard> */}
                     {data 
                         ? 
                         <div style={wrapperDetail}>
-                            <StatisCard data={data.utilizeRate * 100} />
+                            <StatisCard data={data.utilizeRate * 100} title={this.queryRoom + " Utilization"}/>
                             <TimeLine range="day" data={data.roomStatusList} dateFrom={this.queryDate.format('YYYY-MM-DD')} />
                         </div>
                         :
-                        <div style={{ margin: '10px 0 0 20px' }}><Alert message="No data for this room." type="info" /></div>
+                        <div style={{ margin: '10px 0 0 0' }}><Alert message="No data for this room." type="info" /></div>
                     }
                 </div>
             </div>

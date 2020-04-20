@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import moment from 'moment';
 import { List, Card, Popover } from 'antd';
 import FloorCard from './FloorCard';
-import myStyle from '../css/FloorRow.css';
+import myStyle from '../css/FloorRow.less';
 
 const wrapper = {
     marginBottom: '15px',

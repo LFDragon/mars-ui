@@ -30,7 +30,7 @@ export default class MainPage extends Component {
         return (
             <Tabs defaultActiveKey="1" onChange={this.callback} style={{ paddingTop: '20px'}}>
                 <TabPane tab="TKH OT 2" key="1">
-                    <StatisCard data={mockStatisData.util} />
+                    <StatisCard data={mockStatisData.util} title="Overall Utilization"/>
                     <RoomReport />
                 </TabPane>
                 <TabPane tab="TKH OT 1" key="2">

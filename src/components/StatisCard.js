@@ -9,8 +9,8 @@ class StatisCard extends Component {
 
     render() {
         return (
-            <div style={{ padding: '10px 30px 30px 30px' }}>
-                <Row gutter={16}>
+            <div style={{ padding: '10px 0px 30px 0px' }}>
+                <Row gutter={[16, 16]}>
                     {/* <Col span={8}>
                         <Card>
                         <Statistic
@@ -33,10 +33,10 @@ class StatisCard extends Component {
                         />
                         </Card>
                     </Col> */}
-                    <Col span={8}>
+                    <Col xs={{span: 24}} sm={{span: 8}}>
                         <Card>
                         <Statistic
-                            title="Utilization"
+                            title={this.props.title}
                             value={this.props.data}
                             precision={2}
                             valueStyle={{ color: '#3f8600' }}
