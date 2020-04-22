@@ -41,13 +41,17 @@ const mapDispatchToProps = (dispatch) => {
 class RoomReport extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            datePicker: "byDay"
+        };
         this.queryRoom = "CR24.4";
-        this.queryRange = "byDay";
-        this.queryDate = moment(new Date().toLocaleDateString(), 'YYYY-MM-DD').subtract(1,'days');
+        this.queryRangeType = "byDay";
+        this.queryDate = moment().locale('zh-cn');
         this.onRoomChange = this.onRoomChange.bind(this);
-        this.onRangeChange = this.onRangeChange.bind(this);
+        this.onRangeTypeChange = this.onRangeTypeChange.bind(this);
         this.onDateChange = this.onDateChange.bind(this);
+        this.onMonthChange = this.onMonthChange.bind(this);
+        this.onRangeChange = this.onRangeChange.bind(this);
     }
 
     onRoomChange(value) {
@@ -55,13 +59,24 @@ class RoomReport extends Component {
         this.triggerSearch();
     }
 
-    onRangeChange(value) {
-        this.queryRange = value;
+    onRangeTypeChange(value) {
+        this.queryRangeType = value;
+        this.setState({datePicker: value});
         this.triggerSearch();
     }
 
     onDateChange(date, dateString) {
         this.queryDate = date;
+        this.triggerSearch();
+    }
+
+    onMonthChange(date, dateString) {
+        this.queryMonth = date;
+        this.triggerSearch();
+    }
+
+    onRangeChange(date, dateString) {
+        this.queryRange = date;
         this.triggerSearch();
     }
 
@@ -95,7 +110,6 @@ class RoomReport extends Component {
                         defaultValue={this.queryRoom}
                         optionFilterProp="children"
                         onChange={this.onRoomChange}
-                        onSearch={this.onSearch}
                         filterOption={(input, option) =>
                             option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                         }
@@ -105,12 +119,14 @@ class RoomReport extends Component {
                         <Option value="CR25.3">CR25.3</Option>
                         <Option value="VCR25.5">VCR25.5</Option>
                     </Select>
-                    <Select defaultValue={this.queryRange} className={myStyle['mySelect']} onChange={this.onRangeChange}>
+                    <Select defaultValue={this.queryRangeType} className={myStyle['mySelect']} onChange={this.onRangeTypeChange}>
                         <Option value="byDay">By Day</Option>
                         <Option value="byMonth">By Month</Option>
                         <Option value="custom">Custom Range</Option>
                     </Select>
-                    <DatePicker className={myStyle['mySelect']} onChange={this.onDateChange} defaultValue={this.queryDate}/>
+                    <DatePicker className={myStyle['mySelect']} style={{display: this.state.datePicker=="byDay" ? "block" : "none"}} onChange={this.onDateChange} defaultValue={this.queryDate}/>
+                    <MonthPicker className={myStyle['mySelect']} style={{display: this.state.datePicker=="byMonth" ? "block" : "none"}} onChange={this.onMonthChange} defaultValue={this.queryDate}/>
+                    <RangePicker className={myStyle['mySelect']} style={{display: this.state.datePicker=="custom" ? "block" : "none"}} onChange={this.onRangeChange} defaultValue={[this.queryDate, this.queryDate]}/>
                 </Row>
                 <div style={wrapper}>
                     {/* <FloorCard content={this.queryRoom}></FloorCard> */}
