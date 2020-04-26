@@ -9,6 +9,18 @@ const redColor = {
 };
 
 class BasicLayout extends Component {
+    constructor(props) {
+        super(props);
+        switch(window.location.pathname) {
+            case '/':
+                document.title = "MARS";
+                break;
+            case '/report':
+                document.title = "MARS - Report";
+                break;
+        }
+    }
+
     handleClick = e => {
         if (window.location.pathname==e.key) return;
         switch(e.key) {

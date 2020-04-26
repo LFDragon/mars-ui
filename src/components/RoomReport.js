@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import moment from 'moment';
-import { Select, Row, DatePicker, Alert } from 'antd';
+import { Select, Row, DatePicker, Alert, Button } from 'antd';
 import { connect } from 'dva';
 import FloorCard from './FloorCard';
 import StatisCard from './StatisCard';
@@ -34,6 +34,11 @@ const mapDispatchToProps = (dispatch) => {
                 payload: params,
             });
         },
+        getRoomList: () => {
+            dispatch({
+                type: `${namespace}/queryRoomList`,
+            });
+        }
     };
 };
 
@@ -44,7 +49,6 @@ class RoomReport extends Component {
         this.state = {
             datePicker: "byDay"
         };
-        this.queryRoom = "CR24.4";
         this.queryRangeType = "byDay";
         this.queryDate = moment().locale('zh-cn');
         this.onRoomChange = this.onRoomChange.bind(this);
@@ -52,43 +56,40 @@ class RoomReport extends Component {
         this.onDateChange = this.onDateChange.bind(this);
         this.onMonthChange = this.onMonthChange.bind(this);
         this.onRangeChange = this.onRangeChange.bind(this);
+        this.triggerSearch = this.triggerSearch.bind(this);
+        this.props.getRoomList();
     }
 
     onRoomChange(value) {
         this.queryRoom = value;
-        this.triggerSearch();
     }
 
     onRangeTypeChange(value) {
         this.queryRangeType = value;
         this.setState({datePicker: value});
-        this.triggerSearch();
     }
 
     onDateChange(date, dateString) {
         this.queryDate = date;
-        this.triggerSearch();
     }
 
     onMonthChange(date, dateString) {
         this.queryMonth = date;
-        this.triggerSearch();
     }
 
     onRangeChange(date, dateString) {
         this.queryRange = date;
-        this.triggerSearch();
     }
 
     triggerSearch() {
+        var roomData = this.props.reportData.rooms;
+        if (!roomData[this.queryRoom]) return;
+        var roomId = roomData[this.queryRoom].room.id
+        
         var queryString = "?";
         if (!this.queryDate) return;
         queryString += `fromDate=${this.queryDate.format('YYYY-MM-DD')}`;
-        this.props.queryReport(queryString);
-    }
-
-    componentDidMount() {
-        this.triggerSearch();
+        this.props.queryReport([roomId, queryString]);
     }
 
     render() {
@@ -107,26 +108,40 @@ class RoomReport extends Component {
                     <Select
                         showSearch
                         className={myStyle['mySelect']}
-                        defaultValue={this.queryRoom}
                         optionFilterProp="children"
+                        placeholder="Select a room"
                         onChange={this.onRoomChange}
                         filterOption={(input, option) =>
                             option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                         }
                     >
-                        <Option value="CR24.4">CR24.4</Option>
-                        <Option value="VCR24.5">VCR24.5</Option>
-                        <Option value="CR25.3">CR25.3</Option>
-                        <Option value="VCR25.5">VCR25.5</Option>
+                        {   
+                            Object.keys(this.props.reportData.rooms).sort().map((val, idx) => {
+                                return <Option value={val}>{val}</Option>
+                            })
+                        }
                     </Select>
                     <Select defaultValue={this.queryRangeType} className={myStyle['mySelect']} onChange={this.onRangeTypeChange}>
                         <Option value="byDay">By Day</Option>
                         <Option value="byMonth">By Month</Option>
                         <Option value="custom">Custom Range</Option>
                     </Select>
-                    <DatePicker className={myStyle['mySelect']} style={{display: this.state.datePicker=="byDay" ? "block" : "none"}} onChange={this.onDateChange} defaultValue={this.queryDate}/>
-                    <MonthPicker className={myStyle['mySelect']} style={{display: this.state.datePicker=="byMonth" ? "block" : "none"}} onChange={this.onMonthChange} defaultValue={this.queryDate}/>
-                    <RangePicker className={myStyle['mySelect']} style={{display: this.state.datePicker=="custom" ? "block" : "none"}} onChange={this.onRangeChange} defaultValue={[this.queryDate, this.queryDate]}/>
+                    <DatePicker 
+                        className={myStyle['mySelect']} 
+                        style={{display: this.state.datePicker=="byDay" ? "inline-block" : "none"}}
+                        onChange={this.onDateChange}
+                        defaultValue={this.queryDate}/>
+                    <MonthPicker 
+                        className={myStyle['mySelect']} 
+                        style={{display: this.state.datePicker=="byMonth" ? "inline-block" : "none"}}
+                        onChange={this.onMonthChange}
+                        defaultValue={this.queryDate}/>
+                    <RangePicker
+                        className={myStyle['mySelect']} 
+                        style={{display: this.state.datePicker=="custom" ? "inline-block" : "none"}}
+                        onChange={this.onRangeChange}
+                        defaultValue={[this.queryDate, this.queryDate]}/>
+                    <Button className={myStyle['myButton']} onClick={this.triggerSearch} type="primary">Get Report</Button>
                 </Row>
                 <div style={wrapper}>
                     {/* <FloorCard content={this.queryRoom}></FloorCard> */}
@@ -137,7 +152,7 @@ class RoomReport extends Component {
                             <TimeLine range="day" data={data.roomStatusList} dateFrom={this.queryDate.format('YYYY-MM-DD')} />
                         </div>
                         :
-                        <div style={{ margin: '10px 0 0 0' }}><Alert message="No data for this room." type="info" /></div>
+                        <div style={{ margin: '10px 0 0 0', width: '100%'}}><Alert message="No data for this room." type="info" /></div>
                     }
                 </div>
             </div>
