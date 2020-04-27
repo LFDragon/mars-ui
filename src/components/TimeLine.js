@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import moment from 'moment';
 import SecDate from './TimeLineSecDate';
 import Sec from './TimeLineSec';
+import styles from '../css/General.less';
 
 const wrapperTimeLine = {
     display: 'flex',
@@ -16,6 +17,7 @@ const wrapperDate = {
     minWidth: '480px'
 };
 const wrapper = {
+    marginTop: '15px',
     overflowX: 'scroll'
 };
 
@@ -66,7 +68,17 @@ class TimeLine extends Component {
 
         return (
             <div>
-                <p>Time line:</p>
+                <div className={styles['my-desc-legend']}>
+                    <div className={styles['my-desc-legend-row']}><div className={styles['my-desc-legend-square']} style={{backgroundColor: 'lightgrey'}}></div>
+                    - abnormal, no status update more than 1 hour
+                    </div>
+                    <div className={styles['my-desc-legend-row']}><div className={styles['my-desc-legend-square']} style={{backgroundColor: 'lightgreen'}}></div>
+                    - available to book
+                    </div>
+                    <div className={styles['my-desc-legend-row']}><div className={styles['my-desc-legend-square']} style={{backgroundColor: 'lightpink'}}></div>
+                    - currently in use
+                    </div>
+                </div>
                 <div style={wrapper}>
                     <div style={wrapperTimeLine}>
                         {dataArray.map((value, index) => {

@@ -56,9 +56,7 @@ class BasicLayout extends Component {
                     <Row type="flex" justify="center">
                         <Col span={20}>
                             <div style={{ minHeight: 360 }}>
-                                <div>
-                                    {this.props.children}
-                                </div>
+                                {this.props.children}
                             </div>
                         </Col>
                     </Row>

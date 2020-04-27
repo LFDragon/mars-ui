@@ -12,7 +12,7 @@ const { MonthPicker, RangePicker, WeekPicker } = DatePicker;
 const namespace = 'roomreport';
 
 const wrapper = {
-    marginTop: '20px',
+    marginTop: '10px',
     display: 'flex'
 };
 const wrapperDetail = {
@@ -103,7 +103,7 @@ class RoomReport extends Component {
             }
         }
         return (
-            <div style={{ padding: '30px 10px 0px 10px', borderTop: '1px solid lightgrey' }}>
+            <div style={{ padding: '20px 10px 0px 10px', borderTop: '1px solid lightgrey' }}>
                 <Row gutter={16}>
                     <Select
                         showSearch
@@ -148,7 +148,7 @@ class RoomReport extends Component {
                     {data 
                         ? 
                         <div style={wrapperDetail}>
-                            <StatisCard data={data.utilizeRate * 100} title={this.queryRoom + " Utilization"}/>
+                            <StatisCard data={data.utilizeRate * 100} title={this.queryRoom + " Utilization"} style={{margin: '5px 0 10px 0'}}/>
                             <TimeLine range="day" data={data.roomStatusList} dateFrom={this.queryDate.format('YYYY-MM-DD')} />
                         </div>
                         :

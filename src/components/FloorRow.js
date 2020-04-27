@@ -57,8 +57,8 @@ class FloorRow extends Component {
                                     )} 
                                     trigger="hover">
                                     <Card bodyStyle={{paddingTop:'10px', paddingBottom:'10px'}} style={cardDetail} className={myStyle[statusMap[item.currentStatus.status]]}>
-                                        <div style={{color:'grey'}}>{item.room.name}</div>
-                                        <div>{item.currentStatus.status}</div>
+                                        <div style={{color:'grey'}}>{item.room.name.replace(/CR|VCR/, '')}</div>
+                                        {/* <div>{item.currentStatus.status}</div> */}
                                     </Card>
                                 </Popover>
                             </List.Item>
