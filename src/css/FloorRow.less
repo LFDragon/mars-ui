@@ -1,9 +1,24 @@
-.floorRowCardAvailable {
-    background-color: lightgreen;
+.wrapper {
+  margin-bottom: 15px;
+  display: flex;
 }
-.floorRowCardOccupied {
-    background-color: lightpink;
+.row-wrapper {
+  width: 100%;
+  display: flex;
+  overflow-x: auto;
 }
-.floorRowCardUnknown {
-    background-color: lightgrey;
+.card-detail {
+  text-align: center;
+  font-weight: bold;
+  margin: 10px 0 auto 15px;
+  width: 150px;
+}
+
+@media (max-width: 480px) {
+  .wrapper {
+    margin-bottom: 5px;
+  }
+  .card-detail {
+    margin: 10px 0 auto 5px;
+  }
 }

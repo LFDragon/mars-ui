@@ -69,14 +69,14 @@ class TimeLine extends Component {
         return (
             <div>
                 <div className={styles['my-desc-legend']}>
-                    <div className={styles['my-desc-legend-row']}><div className={styles['my-desc-legend-square']} style={{backgroundColor: 'lightgrey'}}></div>
-                    - abnormal, no status update more than 1 hour
-                    </div>
                     <div className={styles['my-desc-legend-row']}><div className={styles['my-desc-legend-square']} style={{backgroundColor: 'lightgreen'}}></div>
-                    - available to book
+                    - Available
                     </div>
                     <div className={styles['my-desc-legend-row']}><div className={styles['my-desc-legend-square']} style={{backgroundColor: 'lightpink'}}></div>
-                    - currently in use
+                    - In use
+                    </div>
+                    <div className={styles['my-desc-legend-row']}><div className={styles['my-desc-legend-square']} style={{backgroundColor: 'lightgrey'}}></div>
+                    - Unknown
                     </div>
                 </div>
                 <div style={wrapper}>

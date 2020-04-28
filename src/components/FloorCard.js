@@ -4,7 +4,6 @@ import { Card } from 'antd';
 
 const style = {
     margin: '10px',
-    minHeight: '63px',
     boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2)',
     border: '1px solid #2195F2',
     background: '#2195F2',
@@ -22,7 +21,7 @@ class FloorCard extends Component {
 
     render() {
         return (
-            <Card bodyStyle={{padding: '15px'}} style={style}>
+            <Card bodyStyle={{padding: '8px'}} style={style}>
                 {this.props.content}
             </Card>  
         );
