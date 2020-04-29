@@ -9,19 +9,20 @@ const wrapperTimeLine = {
     border: '1px solid lightgrey',
     backgroundColor: 'white',
     height: '50px',
-    minWidth: '480px'
+    minWidth: '640px'
 };
 const wrapperDate = {
     display: 'flex',
     height: '20px',
-    minWidth: '480px'
+    minWidth: '640px'
 };
 const wrapper = {
     marginTop: '15px',
-    overflowX: 'scroll'
+    overflowX: 'auto'
 };
 
 const SCALEBYDAY = ['00:00', '02:00', '04:00', '06:00', '08:00', '10:00', '12:00', '14:00', '16:00', '18:00', '20:00', '22:00'];
+const DAYSEC = 86400;
 
 class TimeLine extends Component {
     constructor(props) {
@@ -33,36 +34,53 @@ class TimeLine extends Component {
         var dataArray = [];
         var dateWidth = null;
         var timeItem = null;
-        if (this.props.range == "day") {
-            //Set scale
-            timeItem = SCALEBYDAY;
-            dateWidth = 100 / timeItem.length;
+        var totalSec = null;
+        var endingTS = null;
+        var startingTS = null;
+        var endingTS = null;
+        
+        //Set scale
+        switch(this.props.range) {
+            case "byDay":
+                startingTS = moment(this.props.date + "T00:00:00");
+                endingTS = moment(this.props.date + "T24:00:00");
+                timeItem = SCALEBYDAY;
+                dateWidth = 100 / timeItem.length;
+                totalSec = DAYSEC;
+                break;
+            case "byMonth":
+                startingTS = moment(this.props.fromDate + "T00:00:00");
+                endingTS = moment(this.props.toDate + "T24:00:00");
+                timeItem = Array.from({length: startingTS.daysInMonth()}, (v, k) => k+1);
+                dateWidth = 100 / timeItem.length;
+                totalSec = DAYSEC * startingTS.daysInMonth();
+                break;
+        }
+            
+        //Set data
+        var nextSecType = 'UNKNOWN';
+        var nextSecStartTime = startingTS;
+        for (let i in this.props.data) {
+            var newSec = {};
+            var timeStamp = moment(this.props.data[i]['updateTimestamp']);
+            newSec['status'] = nextSecType;
+            nextSecType = this.props.data[i]['status'];
+            newSec['width'] = timeStamp.diff(nextSecStartTime, 'seconds') / totalSec * 100;
+            newSec['start'] = nextSecStartTime.format("YYYY-MM-DD HH:mm:ss");
+            nextSecStartTime = timeStamp;
+            newSec['end'] = nextSecStartTime.format("YYYY-MM-DD HH:mm:ss");
+            newSec['detail'] = 'N/A';
+            dataArray.push(newSec);
 
-            //Set data
-            var nextSecType = 'UNKNOWN';
-            var nextSecStartTime = moment(this.props.dateFrom + "T00:00:00");
-            for (let i in this.props.data) {
-                var newSec = {};
-                var timeStamp = moment(this.props.data[i]['updateTimestamp']);
+            if (i == this.props.data.length - 1) {
+                newSec = {};
+                timeStamp = endingTS;
                 newSec['status'] = nextSecType;
-                nextSecType = this.props.data[i]['status'];
-                newSec['width'] = timeStamp.diff(nextSecStartTime, 'seconds') / 86400 * 100;
+                newSec['width'] = timeStamp.diff(nextSecStartTime, 'seconds') / totalSec * 100;
                 newSec['start'] = nextSecStartTime.format("YYYY-MM-DD HH:mm:ss");
-                nextSecStartTime = timeStamp;
-                newSec['end'] = nextSecStartTime.format("YYYY-MM-DD HH:mm:ss");
+                newSec['end'] = timeStamp.format("YYYY-MM-DD HH:mm:ss");
                 newSec['detail'] = 'N/A';
                 dataArray.push(newSec);
-
-                if (i == this.props.data.length - 1) {
-                    newSec = {};
-                    timeStamp = moment(this.props.dateFrom + "T24:00:00");
-                    newSec['status'] = nextSecType;
-                    newSec['width'] = timeStamp.diff(nextSecStartTime, 'seconds') / 86400 * 100;
-                    newSec['start'] = nextSecStartTime.format("YYYY-MM-DD HH:mm:ss");
-                    newSec['end'] = timeStamp.format("YYYY-MM-DD HH:mm:ss");
-                    newSec['detail'] = 'N/A';
-                    dataArray.push(newSec);
-                }
             }
         }
 
