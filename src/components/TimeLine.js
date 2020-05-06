@@ -21,7 +21,8 @@ const wrapper = {
     overflowX: 'auto'
 };
 
-const SCALEBYDAY = ['00:00', '02:00', '04:00', '06:00', '08:00', '10:00', '12:00', '14:00', '16:00', '18:00', '20:00', '22:00'];
+// const SCALEBYDAY = ['00:00', '02:00', '04:00', '06:00', '08:00', '10:00', '12:00', '14:00', '16:00', '18:00', '20:00', '22:00'];
+const SCALEBYDAY = ['8am', '9am', '10am', '11am', '12pm', '13pm', '14pm', '15pm', '16pm', '17pm', '18pm', '19pm', '20pm', '21pm', '22pm', '23pm'];
 const DAYSEC = 86400;
 
 class TimeLine extends Component {
@@ -42,11 +43,11 @@ class TimeLine extends Component {
         //Set scale
         switch(this.props.range) {
             case "byDay":
-                startingTS = moment(this.props.date + "T00:00:00");
+                startingTS = moment(this.props.date + "T08:00:00");
                 endingTS = moment(this.props.date + "T24:00:00");
                 timeItem = SCALEBYDAY;
                 dateWidth = 100 / timeItem.length;
-                totalSec = DAYSEC;
+                totalSec = DAYSEC * 2/3;
                 break;
             case "byMonth":
                 startingTS = moment(this.props.fromDate + "T00:00:00");
@@ -65,6 +66,10 @@ class TimeLine extends Component {
             var timeStamp = moment(this.props.data[i]['updateTimestamp']);
             newSec['status'] = nextSecType;
             nextSecType = this.props.data[i]['status'];
+            
+            //skip data earlier than 8am
+            if (timeStamp.diff(nextSecStartTime, 'seconds') < 0) continue;
+
             newSec['width'] = timeStamp.diff(nextSecStartTime, 'seconds') / totalSec * 100;
             newSec['start'] = nextSecStartTime.format("YYYY-MM-DD HH:mm:ss");
             nextSecStartTime = timeStamp;

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import moment from 'moment';
 import { Select, Row, DatePicker, Alert, Button } from 'antd';
 import { connect } from 'dva';
-import FloorCard from './FloorCard';
 import StatisCard from './StatisCard';
 import TimeLine from './TimeLine';
 import myStyle from '../css/RoomReport.less';
@@ -33,11 +32,6 @@ const mapDispatchToProps = (dispatch) => {
                 type: `${namespace}/queryRoomReport`,
                 payload: params,
             });
-        },
-        getRoomList: () => {
-            dispatch({
-                type: `${namespace}/queryRoomList`,
-            });
         }
     };
 };
@@ -59,7 +53,6 @@ class RoomReport extends Component {
         this.onMonthChange = this.onMonthChange.bind(this);
         this.onRangeChange = this.onRangeChange.bind(this);
         this.triggerSearch = this.triggerSearch.bind(this);
-        this.props.getRoomList();
     }
 
     onRoomChange(value) {
@@ -86,7 +79,7 @@ class RoomReport extends Component {
     triggerSearch() {
         this.queryRangeType = this.state.datePicker;
 
-        var roomData = this.props.reportData.rooms;
+        var roomData = this.props.roomList;
         if (!roomData[this.queryRoom]) return;
         var roomId = roomData[this.queryRoom].room.id
         
@@ -95,7 +88,8 @@ class RoomReport extends Component {
 
         switch(this.queryRangeType) {
             case "byDay":
-                queryString += `fromDate=${this.queryDate.format('YYYY-MM-DD')}`;
+                const queryDate = this.queryDate.format('YYYY-MM-DD');
+                queryString += `fromDate=${queryDate}&toDate=${queryDate}`;
                 break;
             case "byMonth":
                 queryString += `fromDate=${this.queryFromDate}&toDate=${this.queryToDate}`;
@@ -128,7 +122,7 @@ class RoomReport extends Component {
                         }
                     >
                         {   
-                            Object.keys(this.props.reportData.rooms).sort().map((val, idx) => {
+                            Object.keys(this.props.roomList).sort().map((val, idx) => {
                                 return <Option value={val}>{val}</Option>
                             })
                         }
@@ -148,11 +142,16 @@ class RoomReport extends Component {
                         style={{display: this.state.datePicker=="byMonth" ? "inline-block" : "none"}}
                         onChange={this.onMonthChange}
                         defaultValue={this.queryDate}/>
-                    <RangePicker
+                    <DatePicker 
                         className={myStyle['mySelect']} 
                         style={{display: this.state.datePicker=="custom" ? "inline-block" : "none"}}
-                        onChange={this.onRangeChange}
-                        defaultValue={[this.queryDate, this.queryDate]}/>
+                        placeholder="from date"
+                        onChange={this.onRangeChange}/>
+                    <DatePicker 
+                        className={myStyle['mySelect']} 
+                        style={{display: this.state.datePicker=="custom" ? "inline-block" : "none"}}
+                        placeholder="to date"
+                        onChange={this.onRangeChange}/>
                     <Button className={myStyle['myButton']} onClick={this.triggerSearch} type="primary">Get Report</Button>
                 </Row>
                 <div style={wrapper}>

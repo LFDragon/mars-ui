@@ -6,6 +6,7 @@ import RoomReport from '../components/RoomReport';
 import styles from '../css/General.less';
 
 const { TabPane } = Tabs;
+const namespace = 'allreport';
 
 const mockStatisData = {
     'bookRate': 0,
@@ -13,14 +14,30 @@ const mockStatisData = {
     'util': 0
 };
 
+const mapStateToProps = (state) => {
+    const data = state[namespace];
+    return {
+        data,
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        queryRoom: (params) => {
+            dispatch({
+                type: `${namespace}/queryRoomList`,
+                payload: params,
+            });
+        }
+    };
+};
+
+@connect(mapStateToProps, mapDispatchToProps)
 export default class MainPage extends Component {
     constructor(props) {
         super(props);
-        this.state = {}
-    }
-
-    componentDidMount() {
-        // this.props.onDidMount();
+        this.state = {};
+        this.props.queryRoom(['TKHOT2']);
     }
 
     callback(key) {
@@ -40,8 +57,8 @@ export default class MainPage extends Component {
                 </Row>
                 <Tabs defaultActiveKey="1" onChange={this.callback} style={{ paddingTop: '5px', paddingBottom: '20px'}}>
                     <TabPane tab="TKH OT 2" key="1">
-                        <StatisCard data={mockStatisData.util} title="Real-time Overall Utilization" style={{marginBottom: '10px'}}/>
-                        <RoomReport />
+                        <StatisCard data={this.props.data.utilRate} title="Real-time Overall Utilization" style={{marginBottom: '10px'}}/>
+                        <RoomReport roomList={this.props.data.rooms} />
                     </TabPane>
                     <TabPane tab="TKH OT 1" key="2">
                         No data.

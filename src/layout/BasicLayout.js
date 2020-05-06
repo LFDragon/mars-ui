@@ -61,7 +61,7 @@ class BasicLayout extends Component {
                         </Col>
                     </Row>
                 </Content>
-                <Footer style={{ textAlign: 'center' }}>MARS ©2019 Created by HSBC</Footer>
+                <Footer style={{ textAlign: 'center' }}>MARS ©2020 Created by HSBC</Footer>
             </Layout>
         )
     }
