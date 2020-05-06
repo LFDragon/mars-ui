@@ -51,7 +51,8 @@ class RoomReport extends Component {
         this.onRangeTypeChange = this.onRangeTypeChange.bind(this);
         this.onDateChange = this.onDateChange.bind(this);
         this.onMonthChange = this.onMonthChange.bind(this);
-        this.onRangeChange = this.onRangeChange.bind(this);
+        this.onFromRangeChange = this.onFromRangeChange.bind(this);
+        this.onToRangeChange = this.onToRangeChange.bind(this);
         this.triggerSearch = this.triggerSearch.bind(this);
     }
 
@@ -72,7 +73,11 @@ class RoomReport extends Component {
         this.queryToDate = date.endOf('month').format('YYYY-MM-DD');
     }
 
-    onRangeChange(date, dateString) {
+    onFromRangeChange(date, dateString) {
+        this.queryRange = date;
+    }
+
+    onToRangeChange(date, dateString) {
         this.queryRange = date;
     }
 
@@ -146,12 +151,12 @@ class RoomReport extends Component {
                         className={myStyle['mySelect']} 
                         style={{display: this.state.datePicker=="custom" ? "inline-block" : "none"}}
                         placeholder="from date"
-                        onChange={this.onRangeChange}/>
+                        onChange={this.onFromRangeChange}/>
                     <DatePicker 
                         className={myStyle['mySelect']} 
                         style={{display: this.state.datePicker=="custom" ? "inline-block" : "none"}}
                         placeholder="to date"
-                        onChange={this.onRangeChange}/>
+                        onChange={this.onToRangeChange}/>
                     <Button className={myStyle['myButton']} onClick={this.triggerSearch} type="primary">Get Report</Button>
                 </Row>
                 <div style={wrapper}>

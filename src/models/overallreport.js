@@ -1,4 +1,5 @@
 import request from '../util/request';
+import {prefix} from '../util/const.js';
 
 export default {
     namespace: 'allreport',
@@ -10,7 +11,7 @@ export default {
         *queryRoomList(_, sagaEffects) {
             const { call, put } = sagaEffects;
             const { payload } = _;
-            const endPointURI = '/location/' + payload[0] + '/report';
+            const endPointURI = prefix + '/location/' + payload[0] + '/report';
         
             const data = yield call(request, endPointURI);
             yield put({ type: 'refreshRooms', payload: data });

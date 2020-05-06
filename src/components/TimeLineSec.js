@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Popover } from 'antd';
 
 const style = {
-    borderLeft: '1px solid lightgrey',
     height: '100%'
 }
 const colorMap = {
