@@ -18,7 +18,7 @@ export default {
     },
     reducers: {
         refreshStatus(state, { payload: reportData }) {
-            return {...state, data: reportData};
+            return {data: reportData};
         }
     },
 

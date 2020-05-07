@@ -8,13 +8,11 @@ const wrapperTimeLine = {
     display: 'flex',
     border: '1px solid lightgrey',
     backgroundColor: 'white',
-    height: '50px',
-    minWidth: '640px'
+    height: '50px'
 };
 const wrapperDate = {
     display: 'flex',
-    height: '20px',
-    minWidth: '640px'
+    height: '20px'
 };
 const wrapper = {
     marginTop: '15px',
@@ -22,13 +20,22 @@ const wrapper = {
 };
 
 // const SCALEBYDAY = ['00:00', '02:00', '04:00', '06:00', '08:00', '10:00', '12:00', '14:00', '16:00', '18:00', '20:00', '22:00'];
-const SCALEBYDAY = ['8am', '9am', '10am', '11am', '12pm', '13pm', '14pm', '15pm', '16pm', '17pm', '18pm', '19pm', '20pm', '21pm', '22pm', '23pm'];
+const SCALEBYDAY = ['8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm', '9pm', '10pm', '11pm'];
 const DAYSEC = 86400;
 
 class TimeLine extends Component {
     constructor(props) {
         super(props);
         this.state = {};
+    }
+
+    getCustomScale(from, to) {
+        var scaleArray = [];
+        while(to.diff(from, 'days') >= 1) {
+            scaleArray.push(from.format('MM/DD'));
+            from = from.add(1, 'day');
+        }
+        return scaleArray;
     }
 
     render() {
@@ -39,7 +46,8 @@ class TimeLine extends Component {
         var endingTS = null;
         var startingTS = null;
         var endingTS = null;
-        
+        var minWidth = {minWidth: '580px'};
+
         //Set scale
         switch(this.props.range) {
             case "byDay":
@@ -48,6 +56,7 @@ class TimeLine extends Component {
                 timeItem = SCALEBYDAY;
                 dateWidth = 100 / timeItem.length;
                 totalSec = DAYSEC * 2/3;
+                minWidth = {minWidth: '580px'};
                 break;
             case "byMonth":
                 startingTS = moment(this.props.fromDate + "T00:00:00");
@@ -55,6 +64,15 @@ class TimeLine extends Component {
                 timeItem = Array.from({length: startingTS.daysInMonth()}, (v, k) => k+1);
                 dateWidth = 100 / timeItem.length;
                 totalSec = DAYSEC * startingTS.daysInMonth();
+                minWidth = {minWidth: '640px'};
+                break;
+            case "custom":
+                startingTS = moment(this.props.cusFromDate + "T00:00:00");
+                endingTS = moment(this.props.cusToDate + "T24:00:00");
+                timeItem = this.getCustomScale(moment(this.props.cusFromDate + "T00:00:00"), moment(this.props.cusToDate + "T24:00:00"));
+                dateWidth = 100 / timeItem.length;
+                totalSec = DAYSEC * endingTS.diff(startingTS, 'days');
+                minWidth = endingTS.diff(startingTS, 'days') > 15 ? {minWidth: '1000px'} : minWidth;
                 break;
         }
             
@@ -103,7 +121,7 @@ class TimeLine extends Component {
                     </div>
                 </div>
                 <div style={wrapper}>
-                    <div style={wrapperTimeLine}>
+                    <div style={{...wrapperTimeLine, ...minWidth}}>
                         {dataArray.map((value, index) => {
                             return <Sec
                                     width={value.width}
@@ -116,7 +134,7 @@ class TimeLine extends Component {
                                 />
                         })}
                     </div>
-                    <div style={wrapperDate}>
+                    <div style={{...wrapperDate, ...minWidth}}>
                         {
                             timeItem.map(function (item) {
                                 return <SecDate width={dateWidth}>{item}</SecDate>

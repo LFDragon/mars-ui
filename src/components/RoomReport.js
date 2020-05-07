@@ -41,12 +41,16 @@ class RoomReport extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            datePicker: "byDay"
+            datePicker: "byDay",
+            startTime: '',
+            endTime: '',
         };
         this.queryRangeType = "byDay";
         this.queryDate = moment().locale('zh-cn');
         this.queryFromDate = moment().startOf('month').format('YYYY-MM-DD');
         this.queryToDate = moment().endOf('month').format('YYYY-MM-DD');
+        this.cusFromDate = null;
+        this.cusToDate = null;
         this.onRoomChange = this.onRoomChange.bind(this);
         this.onRangeTypeChange = this.onRangeTypeChange.bind(this);
         this.onDateChange = this.onDateChange.bind(this);
@@ -69,37 +73,63 @@ class RoomReport extends Component {
     }
 
     onMonthChange(date, dateString) {
-        this.queryFromDate = date.startOf('month').format('YYYY-MM-DD');
-        this.queryToDate = date.endOf('month').format('YYYY-MM-DD');
+        this.queryFromDate = date ? date.startOf('month').format('YYYY-MM-DD') : null;
+        this.queryToDate = date ? date.endOf('month').format('YYYY-MM-DD') : null;
     }
 
     onFromRangeChange(date, dateString) {
-        this.queryRange = date;
+        this.setState({startTime: dateString});
     }
 
     onToRangeChange(date, dateString) {
-        this.queryRange = date;
+        this.setState({endTime: dateString});
+    }
+
+    handleEndDisabledDate = (current) => {
+        const { startTime } = this.state;
+        if (startTime !== '') {
+            return current > moment(startTime).add(30, 'day') || current < moment(startTime);
+        } else {
+            return null;
+        }
+    }
+
+    handleStartDisabledDate = (current) => {
+        const { endTime } = this.state;
+        if (endTime !== '') {
+            return current < moment(endTime).subtract(30, 'day') || current > moment(endTime);
+        } else {
+            return null;
+        }
     }
 
     triggerSearch() {
         this.queryRangeType = this.state.datePicker;
 
-        var roomData = this.props.roomList;
-        if (!roomData[this.queryRoom]) return;
-        var roomId = roomData[this.queryRoom].room.id
-        
         var queryString = "?";
-        if (!this.queryDate) return;
-
         switch(this.queryRangeType) {
             case "byDay":
+                if (!this.queryDate) return alert('Please select date.');
                 const queryDate = this.queryDate.format('YYYY-MM-DD');
                 queryString += `fromDate=${queryDate}&toDate=${queryDate}`;
                 break;
             case "byMonth":
+                if (!this.queryFromDate) return alert('Please select month.');
                 queryString += `fromDate=${this.queryFromDate}&toDate=${this.queryToDate}`;
+                break;
+            case "custom":
+                this.cusFromDate = this.state.startTime;
+                this.cusToDate = this.state.endTime;
+                if (!this.cusFromDate) return alert('Please select start date.');
+                if (!this.cusToDate) return alert('Please select end date.');
+                queryString += `fromDate=${this.cusFromDate}&toDate=${this.cusToDate}`;
+                break;
         }
-        console.log(queryString);
+        
+        var roomData = this.props.roomList;
+        if (!roomData[this.queryRoom]) return alert('Please select room.');
+        var roomId = roomData[this.queryRoom].room.id
+
         this.props.queryReport([roomId, queryString]);
     }
 
@@ -150,13 +180,17 @@ class RoomReport extends Component {
                     <DatePicker 
                         className={myStyle['mySelect']} 
                         style={{display: this.state.datePicker=="custom" ? "inline-block" : "none"}}
-                        placeholder="from date"
-                        onChange={this.onFromRangeChange}/>
+                        placeholder="start date"
+                        onChange={this.onFromRangeChange}
+                        disabledDate={this.handleStartDisabledDate.bind(this)}
+                        />
                     <DatePicker 
                         className={myStyle['mySelect']} 
                         style={{display: this.state.datePicker=="custom" ? "inline-block" : "none"}}
-                        placeholder="to date"
-                        onChange={this.onToRangeChange}/>
+                        placeholder="end date"
+                        onChange={this.onToRangeChange}
+                        disabledDate={this.handleEndDisabledDate.bind(this)}
+                        />
                     <Button className={myStyle['myButton']} onClick={this.triggerSearch} type="primary">Get Report</Button>
                 </Row>
                 <div style={wrapper}>
@@ -164,13 +198,15 @@ class RoomReport extends Component {
                     {data 
                         ? 
                         <div style={wrapperDetail}>
-                            <StatisCard data={data.utilizeRate * 100} title={this.queryRoom + " Utilization"} style={{margin: '5px 0 10px 0'}}/>
+                            <StatisCard data={data.utilizeRate * 100} title={this.queryRoom + " utilization of core hours"} style={{margin: '5px 0 10px 0'}}/>
                             <TimeLine 
                                 range={this.queryRangeType}
                                 data={data.roomStatusList}
-                                date={this.queryDate.format('YYYY-MM-DD')}
+                                date={this.queryDate ? this.queryDate.format('YYYY-MM-DD') : null}
                                 fromDate={this.queryFromDate}
                                 toDate={this.queryToDate}
+                                cusFromDate={this.cusFromDate}
+                                cusToDate={this.cusToDate}
                             />
                         </div>
                         :
