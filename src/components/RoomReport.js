@@ -100,28 +100,28 @@ class RoomReport extends Component {
     }
 
     triggerSearch() {
+        if (!this.state.queryRoom) return alert('Please select room.');
         this.queryRoom = this.state.queryRoom;
-        if (!this.props.roomList[this.queryRoom]) return alert('Please select room.');
         var roomId = this.props.roomList[this.queryRoom].room.id
 
         var queryString = "?";
         switch(this.state.datePicker) {
             case "byDay":
-                this.queryDate = this.state.queryDate ? this.state.queryDate.format('YYYY-MM-DD') : null;
-                if (!this.queryDate) return alert('Please select date.');
+                if (!this.state.queryDate) return alert('Please select date.');
+                this.queryDate = this.state.queryDate.format('YYYY-MM-DD');
                 queryString += `fromDate=${this.queryDate}&toDate=${this.queryDate}`;
                 break;
             case "byMonth":
-                this.queryFromDate = this.state.queryMonth ? this.state.queryMonth.startOf('month').format('YYYY-MM-DD') : null;
-                this.queryToDate = this.state.queryMonth ? this.state.queryMonth.endOf('month').format('YYYY-MM-DD') : null;
-                if (!this.queryFromDate) return alert('Please select month.');
+                if (!this.state.queryMonth) return alert('Please select month.');
+                this.queryFromDate = this.state.queryMonth.startOf('month').format('YYYY-MM-DD');
+                this.queryToDate = this.state.queryMonth.endOf('month').format('YYYY-MM-DD');
                 queryString += `fromDate=${this.queryFromDate}&toDate=${this.queryToDate}`;
                 break;
             case "custom":
+                if (!this.state.startTime) return alert('Please select start date.');
+                if (!this.state.endTime) return alert('Please select end date.');
                 this.cusFromDate = this.state.startTime;
                 this.cusToDate = this.state.endTime;
-                if (!this.cusFromDate) return alert('Please select start date.');
-                if (!this.cusToDate) return alert('Please select end date.');
                 queryString += `fromDate=${this.cusFromDate}&toDate=${this.cusToDate}`;
                 break;
         }
