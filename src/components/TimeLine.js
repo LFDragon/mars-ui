@@ -86,8 +86,19 @@ class TimeLine extends Component {
             nextSecType = this.props.data[i]['status'];
             
             //skip data earlier than 8am
-            if (timeStamp.diff(nextSecStartTime, 'seconds') < 0) continue;
-
+            if (timeStamp.diff(nextSecStartTime, 'seconds') < 0){
+                if ((i < this.props.data.length - 1)) continue;
+                else {
+                    newSec['width'] = 100;
+                    newSec['start'] = nextSecStartTime.format("YYYY-MM-DD HH:mm:ss");
+                    newSec['end'] = endingTS.format("YYYY-MM-DD HH:mm:ss");
+                    newSec['detail'] = 'N/A';
+                    newSec['status'] = nextSecType;
+                    dataArray.push(newSec);
+                    break;
+                }
+            }
+            
             newSec['width'] = timeStamp.diff(nextSecStartTime, 'seconds') / totalSec * 100;
             newSec['start'] = nextSecStartTime.format("YYYY-MM-DD HH:mm:ss");
             nextSecStartTime = timeStamp;

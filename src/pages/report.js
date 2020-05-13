@@ -8,12 +8,6 @@ import styles from '../css/General.less';
 const { TabPane } = Tabs;
 const namespace = 'allreport';
 
-const mockStatisData = {
-    'bookRate': 0,
-    'useRage': 0,
-    'util': 0
-};
-
 const mapStateToProps = (state) => {
     const data = state[namespace];
     return {
@@ -57,7 +51,7 @@ export default class MainPage extends Component {
                 </Row>
                 <Tabs defaultActiveKey="1" onChange={this.callback} style={{ paddingTop: '5px', paddingBottom: '20px'}}>
                     <TabPane tab="TKH OT 2" key="1">
-                        <StatisCard data={this.props.data.utilRate} title="Real-time Overall Utilization" style={{marginBottom: '10px'}}/>
+                        <StatisCard data={this.props.data.utilRate * 100} title="Real-time Overall Utilization" style={{marginBottom: '10px'}}/>
                         <RoomReport roomList={this.props.data.rooms} />
                     </TabPane>
                     <TabPane tab="TKH OT 1" key="2">

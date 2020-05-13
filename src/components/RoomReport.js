@@ -42,15 +42,12 @@ class RoomReport extends Component {
         super(props);
         this.state = {
             datePicker: "byDay",
+            queryDate: moment().locale('zh-cn'),
+            queryMonth: moment().locale('zh-cn'),
             startTime: '',
             endTime: '',
         };
         this.queryRangeType = "byDay";
-        this.queryDate = moment().locale('zh-cn');
-        this.queryFromDate = moment().startOf('month').format('YYYY-MM-DD');
-        this.queryToDate = moment().endOf('month').format('YYYY-MM-DD');
-        this.cusFromDate = null;
-        this.cusToDate = null;
         this.onRoomChange = this.onRoomChange.bind(this);
         this.onRangeTypeChange = this.onRangeTypeChange.bind(this);
         this.onDateChange = this.onDateChange.bind(this);
@@ -61,7 +58,7 @@ class RoomReport extends Component {
     }
 
     onRoomChange(value) {
-        this.queryRoom = value;
+        this.setState({queryRoom: value});
     }
 
     onRangeTypeChange(value) {
@@ -69,12 +66,11 @@ class RoomReport extends Component {
     }
 
     onDateChange(date, dateString) {
-        this.queryDate = date;
+        this.setState({queryDate: date});
     }
 
     onMonthChange(date, dateString) {
-        this.queryFromDate = date ? date.startOf('month').format('YYYY-MM-DD') : null;
-        this.queryToDate = date ? date.endOf('month').format('YYYY-MM-DD') : null;
+        this.setState({queryMonth: date});
     }
 
     onFromRangeChange(date, dateString) {
@@ -104,16 +100,20 @@ class RoomReport extends Component {
     }
 
     triggerSearch() {
-        this.queryRangeType = this.state.datePicker;
+        this.queryRoom = this.state.queryRoom;
+        if (!this.props.roomList[this.queryRoom]) return alert('Please select room.');
+        var roomId = this.props.roomList[this.queryRoom].room.id
 
         var queryString = "?";
-        switch(this.queryRangeType) {
+        switch(this.state.datePicker) {
             case "byDay":
+                this.queryDate = this.state.queryDate ? this.state.queryDate.format('YYYY-MM-DD') : null;
                 if (!this.queryDate) return alert('Please select date.');
-                const queryDate = this.queryDate.format('YYYY-MM-DD');
-                queryString += `fromDate=${queryDate}&toDate=${queryDate}`;
+                queryString += `fromDate=${this.queryDate}&toDate=${this.queryDate}`;
                 break;
             case "byMonth":
+                this.queryFromDate = this.state.queryMonth ? this.state.queryMonth.startOf('month').format('YYYY-MM-DD') : null;
+                this.queryToDate = this.state.queryMonth ? this.state.queryMonth.endOf('month').format('YYYY-MM-DD') : null;
                 if (!this.queryFromDate) return alert('Please select month.');
                 queryString += `fromDate=${this.queryFromDate}&toDate=${this.queryToDate}`;
                 break;
@@ -125,11 +125,8 @@ class RoomReport extends Component {
                 queryString += `fromDate=${this.cusFromDate}&toDate=${this.cusToDate}`;
                 break;
         }
-        
-        var roomData = this.props.roomList;
-        if (!roomData[this.queryRoom]) return alert('Please select room.');
-        var roomId = roomData[this.queryRoom].room.id
 
+        this.queryRangeType = this.state.datePicker;
         this.props.queryReport([roomId, queryString]);
     }
 
@@ -171,12 +168,12 @@ class RoomReport extends Component {
                         className={myStyle['mySelect']} 
                         style={{display: this.state.datePicker=="byDay" ? "inline-block" : "none"}}
                         onChange={this.onDateChange}
-                        defaultValue={this.queryDate}/>
+                        defaultValue={this.state.queryDate}/>
                     <MonthPicker 
                         className={myStyle['mySelect']} 
                         style={{display: this.state.datePicker=="byMonth" ? "inline-block" : "none"}}
                         onChange={this.onMonthChange}
-                        defaultValue={this.queryDate}/>
+                        defaultValue={this.state.queryDate}/>
                     <DatePicker 
                         className={myStyle['mySelect']} 
                         style={{display: this.state.datePicker=="custom" ? "inline-block" : "none"}}
@@ -202,7 +199,7 @@ class RoomReport extends Component {
                             <TimeLine 
                                 range={this.queryRangeType}
                                 data={data.roomStatusList}
-                                date={this.queryDate ? this.queryDate.format('YYYY-MM-DD') : null}
+                                date={this.queryDate}
                                 fromDate={this.queryFromDate}
                                 toDate={this.queryToDate}
                                 cusFromDate={this.cusFromDate}
