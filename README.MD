@@ -10,11 +10,11 @@ The project uses below frameworks
 ### Run in local
 Set `prefix = 'proxy'` in `const.js`, then run
 ```sh
-umi dev
+cnpm run dev
 ```
 
 ### Build
 Set `prefix = ''` in `const.js`, then run
 ```sh
-umi build
+cnpm run build
 ```
