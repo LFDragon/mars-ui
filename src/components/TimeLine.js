@@ -19,8 +19,8 @@ const wrapper = {
     overflowX: 'auto'
 };
 
-// const SCALEBYDAY = ['00:00', '02:00', '04:00', '06:00', '08:00', '10:00', '12:00', '14:00', '16:00', '18:00', '20:00', '22:00'];
-const SCALEBYDAY = ['8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm', '9pm', '10pm', '11pm'];
+const SCALEBYDAY = ['12am', '2am', '4am', '6am', '8am', '10am', '12pm', '2pm', '4pm', '6pm', '8pm', '10pm'];
+// const SCALEBYDAY = ['8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm', '9pm', '10pm', '11pm'];
 const DAYSEC = 86400;
 
 class TimeLine extends Component {
@@ -51,11 +51,11 @@ class TimeLine extends Component {
         //Set scale
         switch(this.props.range) {
             case "byDay":
-                startingTS = moment(this.props.date + "T08:00:00");
+                startingTS = moment(this.props.date + "T00:00:00");
                 endingTS = moment(this.props.date + "T24:00:00");
                 timeItem = SCALEBYDAY;
                 dateWidth = 100 / timeItem.length;
-                totalSec = DAYSEC * 2/3;
+                totalSec = DAYSEC;
                 minWidth = {minWidth: '580px'};
                 break;
             case "byMonth":
